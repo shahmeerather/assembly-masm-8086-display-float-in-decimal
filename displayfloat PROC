@@ -2,6 +2,8 @@ include irvine32.inc
 .data
     fthousand real8 1000.0
     dfval real8 3.141
+    thousand DWORD 1000
+    dwordtmp DWORD ?
 .code
 main PROC
     fld dfval
