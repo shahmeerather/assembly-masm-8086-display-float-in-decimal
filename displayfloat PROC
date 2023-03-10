@@ -1,0 +1,51 @@
+include irvine32.inc
+.data
+    fthousand real8 1000.0
+    dfval real8 3.141
+.code
+main PROC
+    fld dfval
+    call displayfloat
+exit
+main ENDP
+ 
+displayFloat PROC
+    ;--------------------------;
+    ; uses st(0) and prints it ;
+    ;--------------------------;
+    fld fthousand
+    fmul st(0),st(1)
+    fist dwordtmp
+    mov eax,dwordtmp
+    mov edx,eax
+    push edx
+    cdq
+	mov ebx, thousand
+	idiv ebx
+	call writeint
+	push eax
+	mov al,'.'
+	call writechar
+	pop eax
+	imul eax, thousand
+    pop edx
+	sub edx,eax
+	mov eax,edx
+	mov ebx,10
+	mov ecx,3
+	l1:
+		mov esi,ecx
+		cdq
+		idiv ebx
+		push edx
+	loop l1
+	mov ecx,3
+	l2:
+		pop edx
+		mov eax,edx
+		call writedec
+	loop l2
+    ret
+displayfloat ENDP
+
+end main
